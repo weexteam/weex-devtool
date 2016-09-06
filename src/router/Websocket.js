@@ -1,6 +1,7 @@
 /**
  * Created by godsong on 16/6/13.
  */
+const Fs = require('fs');
 const Router = require('koa-router');
 const P2PSession = require('../components/P2PSession');
 const DeviceManager = require('../components/DeviceManager');
@@ -108,9 +109,20 @@ wsRouter.all('/debugProxy/list', function*(next) {
             if (device) {
                 device.websocket.send(JSON.stringify({method: 'WxDebug.reload'}));
             }
+        } else if (message.method == 'WxDebug.getDirContent') {
+            console.log('-----------------------')
+            console.log(this.websocket)
+            console.log('-----------------------')
         }
     });
+
     this.websocket.send(JSON.stringify({method: "WxDebug.pushDeviceList", params: DeviceManager.getDeviceListInfo()}));
+
+    // 如果命令行入口为整个目录
+    if (1) {
+        this.websocket.send(JSON.stringify({ method: 'WxDebug.renderTreeView', params: [] }));
+    }
+
     if (Config.entryBundleUrl) {
         this.websocket.send(JSON.stringify({
             method: "WxDebug.setEntry",

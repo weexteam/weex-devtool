@@ -39,6 +39,9 @@ function connect() {
             })
 
         }
+        else if (message.method == 'WxDebug.renderTreeView') {
+            renderTreeView([{ name: 'index.js', type: 'file' }, { name: 'helloworld', type: 'dir' }]);
+        }
 
     };
     websocket.onclose = function () {
@@ -73,12 +76,12 @@ function diff(deviceList) {
 function renderDeviceList(deviceList) {
     diff(deviceList);
     _deviceList = deviceList;
-    if (deviceList.length > 0) {
-        document.getElementById('help_ctn').style.display = 'block';
-    }
-    else {
-        document.getElementById('help_ctn').style.display = 'none';
-    }
+    // if (deviceList.length > 0) {
+    //     document.getElementById('help_ctn').style.display = 'block';
+    // }
+    // else {
+    //     document.getElementById('help_ctn').style.display = 'none';
+    // }
     var html = deviceList.map(function (device) {
         return `
             <div class="device-wrap" id="device_${device.deviceId}">
@@ -101,7 +104,7 @@ function renderDeviceList(deviceList) {
 
     });
     if(html.length>0) {
-        document.getElementById('container').innerHTML = html.join('\n');
+        document.getElementById('devices_container').innerHTML = html.join('\n');
         var logLevelList = document.querySelectorAll('.log-level');
         var switchList=document.querySelectorAll('.switch');
         logLevelList.forEach(function(loglevelSelector){
@@ -159,7 +162,7 @@ function renderDeviceList(deviceList) {
 
     }
     else{
-        document.getElementById('container').innerHTML ='';
+        document.getElementById('devices_container').innerHTML ='';
     }
 }
 function findDevice(deviceId) {
@@ -197,6 +200,26 @@ function createQRCode(id, content, width, height) {
         correctLevel: QRCode.CorrectLevel.L
     });
     el.title = '';
+}
+function renderTreeView(files) {
+    var treeView = document.getElementById('tree_view');
+    var htmlStr = '<ul class="tree-view-list">';
+
+    files.forEach(function (item) {
+        htmlStr += `<li data-type=${item.type}>
+            <span class='${item.type}-trigger-icon'></span>
+            <a>
+                <i class='${item.type}-icon'></i>
+                <span>${item.name}</span>
+            </a>
+        </li>`;
+    })
+
+    htmlStr += '</ul>';
+    treeView.innerHTML = htmlStr;
+    treeView.style.display = 'block';
+
+    // delegate click event
 }
 var switchComponent=function(device){
     return `<div class="switch">

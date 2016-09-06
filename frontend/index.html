@@ -2,348 +2,48 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Weex Devtool - App List</title>
+    <!--<title>Weex Devtool - App List</title>-->
+    <title>Helloworld</title>
     <script src="vendor/qrcode.min.js"></script>
-    <style>
-        body {
-            background: #f1f2f3;
-            font-family: "STHeiti", "Microsoft YaHei", monospace;
-        }
-
-        #container {
-            margin: 30px 0 60px 0;
-        }
-
-        .device-wrap {
-            display: inline-block;
-            position: relative;
-            padding: 25px 31px 0px 31px;
-            box-shadow: 0px 0px 10px 0 rgba(0, 0, 0, 0.3);
-            border-radius: 5px;
-            margin: 15px;
-            height:315px;
-            overflow: hidden;
-            background: #fff;
-        }
-
-        .line {
-            margin: 15px 0;
-        }
-
-        .line span {
-            font-size: 16px;
-            color: #737373;
-            width: 106px;
-            display: inline-block;
-        }
-
-        .line b {
-            font-size: 16px;
-            font-weight: bolder;
-            margin-left: 8px;
-            width: 170px;
-            overflow: hidden;
-            display: inline-block;
-            text-overflow: ellipsis;
-            text-align: right;
-            vertical-align: top;
-        }
-
-        .btn:first-child {
-            border-right: 1px solid #fff;
-        }
-
-        .btn {
-            display: inline-block;
-            padding: 5px;
-            text-decoration: none;
-            width: 50%;
-            text-align: center;
-            background: #000;
-            z-index: 2;
-            color: #fff;
-            border: 0;
-            box-sizing: border-box;
-            font-size: 18px;
-            line-height: 40px;
-            cursor: pointer;
-        }
-
-        .btn:hover {
-            color: #fff;
-            background: #333;
-        }
-
-        fieldset {
-            margin: 20px;
-            min-height: 300px;
-            border: none;
-            border-top: 1px solid #bbb;
-            border-bottom: 2px solid #000;
-        }
-
-        legend {
-            margin: 0 auto;
-            border: 1px solid #bbb;
-            padding: 8px 30px;
-            font-size: 20px;
-            varter-spacing: 4px;
-            border-radius: 5px;
-        }
-
-        .btn-ctn {
-            position: absolute;
-            left: 0;
-            right: 0;
-            bottom: 0px;
-            font-size: 0;
-        }
-
-        .tips {
-            width: 20px;
-            height: 20px;
-            position: absolute;
-            border-radius: 50%;
-            border: 1px solid #aaa;
-            right: 35px;
-            bottom: 76px;
-            text-align: center;
-            line-height: 23px;
-            font-weight: bold;
-            cursor: help;
-            color: #aaa;
-            /* background: rgb(76,183,238); */
-            z-index: 4;
-        }
-
-        .tips:hover + .mask {
-            transform: scale(45);
-        }
-
-        .tips:hover + .mask + .help {
-            opacity: 1;
-        }
-
-        .mask {
-            position: absolute;
-            width: 20px;
-            height: 20px;
-            position: absolute;
-            border-radius: 50%;
-            background: rgb(76, 183, 238);
-            right: 10px;
-            top: 8px;
-            transition: 0.8s;
-            z-index: 1;
-        }
-
-        .help {
-            transition: 1s;
-            opacity: 0;
-            position: absolute;
-            top: 0;
-            left: 0;
-            bottom: 0;
-            right: 0;
-            color: #fff;
-            z-index: 3;
-            pointer-events: none;
-        }
-
-        .help > div {
-            width: 42%;
-            border: 1px solid #fff;
-            display: inline-block;
-            padding: 10px 3%;
-            height: 110px;
-            font-size: 15px;
-            margin: 15px 4% 0 4%;
-            text-align: center;
-            line-height: 1.2;
-            box-sizing: border-box;
-            vertical-align: top;
-            position: relative;
-        }
-
-        .arrow {
-            position: absolute;
-            width: 0;
-            border-style: solid;
-            border-width: 10px 8px;
-            border-color: #fff transparent transparent transparent;
-            bottom: -20px;
-            left: 50%;
-            margin-left: -10px;
-        }
-
-        .help-ctn {
-            padding-left: 50px;
-            display: none;
-        }
-
-        .help-ctn section {
-            margin-bottom: 20px;
-        }
-
-        .help-ctn b {
-            border: 1px solid #000;
-            display: inline-block;
-            vertical-align: middle;
-            width: 87px;
-            padding: 5px 10px;
-            text-align: center;
-        }
-
-        .help-ctn div {
-            display: inline-block;
-            margin-left: 20px;
-            vertical-align: middle;
-            line-height: 1.4;
-            max-width: 70%;
-        }
-
-        .qrcode {
-            display: inline-block;
-            vertical-align: middle;
-        }
-
-        #qrcode img:hover {
-            -webkit-transform: scale(2);
-        }
-
-        .qrcode-desc {
-
-            line-height: 1.4;
-            margin-top: 20px;
-        }
-
-        .qrcode-section {
-            margin: 20px 0;
-            width: 23%;
-            display: inline-block;
-            padding: 0 50px;
-            vertical-align: top;
-        }
-        .selector{
-            width: 70px;
-            font-size: 18px;
-        }
-        .mr-top-10{
-            margin-top:10px;
-        }
-        .mr-top-10 b{
-            vertical-align: middle;
-        }
-
-        .mr-bottom-10{
-            margin-bottom:10px;
-        }
-        .mr-bottom-10 b{
-            vertical-align: middle;
-        }
-        hr {
-            margin: 0 20px;
-        }
-        .switch {
-            position: relative;
-            width: 70px;
-            display: inline-block;
-            -webkit-user-select:none;
-            -moz-user-select:none;
-            -ms-user-select: none;
-        }
-        .switch-checkbox {
-            display: none;
-        }
-        .switch-label {
-            display: block;
-            overflow: hidden;
-            cursor: pointer;
-            border: 1px solid #999999;
-            border-radius: 20px;
-        }
-        .switch-inner {
-            width: 200%;
-            margin-left: -100%;
-            -moz-transition: margin 0.3s ease-in 0s;
-            -webkit-transition: margin 0.3s ease-in 0s;
-            -o-transition: margin 0.3s ease-in 0s;
-            transition: margin 0.3s ease-in 0s;
-        }
-        .switch-inner > div {
-            float: left;
-            width: 50%;
-            height: 20px;
-            padding: 0;
-            line-height: 20px;
-            font-size: 14px;
-            color: white;
-            text-align:left;
-            font-family: Trebuchet, Arial, sans-serif;
-            font-weight: bold;
-            -moz-box-sizing: border-box;
-            -webkit-box-sizing: border-box;
-            box-sizing: border-box;
-        }
-        .switch-inner .switch-active {
-            padding-left: 10px;
-            background-color: #4280eb;
-            color: #FFFFFF;
-        }
-        .switch-inner .switch-inactive {
-            padding-right: 6px;
-            background-color: #EEEEEE;
-            color: #999999;
-            text-align: right;
-        }
-        .switch-switch {
-            width: 18px;
-            margin: 3px 4px;
-            background: #FFFFFF;
-            border: 1px solid #999999;
-            border-radius: 20px;
-            position: absolute;
-            top: 0;
-            bottom: 0;
-            right: 42px;
-            -moz-transition: all 0.3s ease-in 0s;
-            -webkit-transition: all 0.3s ease-in 0s;
-            -o-transition: all 0.3s ease-in 0s;
-            transition: all 0.3s ease-in 0s;
-        }
-        .switch-checkbox:checked + .switch-label .switch-inner {
-            margin-left: 0;
-        }
-        .switch-checkbox:checked + .switch-label .switch-switch {
-            right: 0px;
-        }
-    </style>
+    <link rel="stylesheet" href="style/index.css">
+    <link rel="stylesheet" href="style/tree.css">
 </head>
 
 <body>
-<fieldset>
-    <legend>App List</legend>
-    <div id="container"></div>
-</fieldset>
-<div class="help-ctn" id="help_ctn">
-    <section>
-        <b>Debugger</b>
 
-        <div>click here to open a page to debug JS files (make breakpoints, watch variables, callstack etc.)</div>
-    </section>
-    <section>
-        <b>Inspector</b>
+<!--file list tree view-->
+<div id="tree_view"></div>
 
-        <div>click this button to open a page to inspect "Elements"(native element), "Console", "Sources", "Network"
+<div class="main">
+    <fieldset>
+        <legend>QR code List</legend>
+        <div id="qrcode_container">
+            <div class="qrcode-section">
+                <div id="switchQrcode" class="qrcode"></div>
+                <div class="qrcode-desc">this qrcode could be used with playground to start Debugger.
+                </div>
+            </div>
         </div>
-    </section>
-</div>
-<div id="qrcode_container">
-    <div class="qrcode-section">
-        <div id="switchQrcode" class="qrcode"></div>
-        <div class="qrcode-desc">this qrcode could be used with playground to start Debugger.
-        </div>
-    </div>
+    </fieldset>
+
+
+    <fieldset>
+        <legend>Devices List</legend>
+        <div id="devices_container"></div>
+    </fieldset>
+    <!--<div class="help-ctn" id="help_ctn">
+        <section>
+            <b>Debugger</b>
+
+            <div>click here to open a page to debug JS files (make breakpoints, watch variables, callstack etc.)</div>
+        </section>
+        <section>
+            <b>Inspector</b>
+
+            <div>click this button to open a page to inspect "Elements"(native element), "Console", "Sources", "Network"
+            </div>
+        </section>
+    </div>-->
 </div>
 
 <script src="lib/App.js"></script>
