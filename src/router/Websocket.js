@@ -1,7 +1,6 @@
 /**
  * Created by godsong on 16/6/13.
  */
-const Fs = require('fs');
 const Router = require('koa-router');
 const P2PSession = require('../components/P2PSession');
 const DeviceManager = require('../components/DeviceManager');
@@ -11,6 +10,8 @@ const Logger = require('../components/Logger');
 const Config = require('../components/Config');
 const MessageBus = require('../components/MessageBus');
 const bundleWrapper = require('../util/BundleWrapper');
+const getDirContent = require('../util/FsHelper');
+
 let wsRouter = Router();
 let chromeWsIndex = 2;
 let nativeWsIndex = 1;
@@ -72,6 +73,7 @@ MessageBus.on('page.refresh', function () {
      })*/
 });
 wsRouter.all('/debugProxy/list', function*(next) {
+    let ws = this.websocket;
     listPageWebsocket.push(this.websocket);
     this.websocket.on('close', function () {
         listPageWebsocket = listPageWebsocket.filter(ws=>ws !== this);
@@ -110,17 +112,22 @@ wsRouter.all('/debugProxy/list', function*(next) {
                 device.websocket.send(JSON.stringify({method: 'WxDebug.reload'}));
             }
         } else if (message.method == 'WxDebug.getDirContent') {
-            console.log('-----------------------')
-            console.log(this.websocket)
-            console.log('-----------------------')
+            ws.send(JSON.stringify({
+                method: 'WxDebug.renderDirView',
+                params: getDirContent(message.params)
+            }));
         }
     });
 
     this.websocket.send(JSON.stringify({method: "WxDebug.pushDeviceList", params: DeviceManager.getDeviceListInfo()}));
 
     // 如果命令行入口为整个目录
-    if (1) {
-        this.websocket.send(JSON.stringify({ method: 'WxDebug.renderTreeView', params: [] }));
+    if (!Config.entryBundleUrl) {
+        this.websocket.send(JSON.stringify({
+            method: 'WxDebug.renderTreeView',
+            params: getDirContent(Config.root),
+            basePath: Config.root
+        }));
     }
 
     if (Config.entryBundleUrl) {

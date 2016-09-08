@@ -1,6 +1,8 @@
 var websocket;
 var maxReconnectCount = 5;
 var _deviceList = [];
+var treeView;
+
 function connect() {
     websocket = new WebSocket('ws://' + location.host + '/debugProxy/list');
     websocket.onmessage = function (event) {
@@ -40,7 +42,10 @@ function connect() {
 
         }
         else if (message.method == 'WxDebug.renderTreeView') {
-            renderTreeView([{ name: 'index.js', type: 'file' }, { name: 'helloworld', type: 'dir' }]);
+            treeView = new TreeView(message.params, message.basePath);
+        }
+        else if (message.method == 'WxDebug.renderDirView') {
+            treeView.renderDirView(message.params);
         }
 
     };
@@ -76,12 +81,12 @@ function diff(deviceList) {
 function renderDeviceList(deviceList) {
     diff(deviceList);
     _deviceList = deviceList;
-    // if (deviceList.length > 0) {
-    //     document.getElementById('help_ctn').style.display = 'block';
-    // }
-    // else {
-    //     document.getElementById('help_ctn').style.display = 'none';
-    // }
+    if (deviceList.length > 0) {
+        document.getElementById('help_ctn').style.display = 'block';
+    }
+    else {
+        document.getElementById('help_ctn').style.display = 'none';
+    }
     var html = deviceList.map(function (device) {
         return `
             <div class="device-wrap" id="device_${device.deviceId}">
@@ -191,7 +196,8 @@ function openInspector(deviceId) {
 function createQRCode(id, content, width, height) {
     var el = document.getElementById(id);
     el.innerHTML = '';
-    new QRCode(el, {
+    el.title = '';
+    return new QRCode(el, {
         text: content,
         width: width || 150,
         height: height || 150,
@@ -199,27 +205,6 @@ function createQRCode(id, content, width, height) {
         colorLight: "#ffffff",
         correctLevel: QRCode.CorrectLevel.L
     });
-    el.title = '';
-}
-function renderTreeView(files) {
-    var treeView = document.getElementById('tree_view');
-    var htmlStr = '<ul class="tree-view-list">';
-
-    files.forEach(function (item) {
-        htmlStr += `<li data-type=${item.type}>
-            <span class='${item.type}-trigger-icon'></span>
-            <a>
-                <i class='${item.type}-icon'></i>
-                <span>${item.name}</span>
-            </a>
-        </li>`;
-    })
-
-    htmlStr += '</ul>';
-    treeView.innerHTML = htmlStr;
-    treeView.style.display = 'block';
-
-    // delegate click event
 }
 var switchComponent=function(device){
     return `<div class="switch">

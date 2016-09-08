@@ -1,15 +1,18 @@
 /** tree view style */
 #tree_view {
   display: none;
-  float: left;
+  position: fixed;
+  top: 0;
+  left: 0;
   height: 100%;
   overflow: auto;
-  width: 270px;
+  /*width: 240px;*/
   border-right: 1px solid rgb(221, 221, 221);
 }
 
 .tree-view-list {
   list-style-type: none;
+  padding-left: 24px;
 }
 
 .file-icon::before {
@@ -24,6 +27,14 @@
   display: inline-block;
   border-top: 5px solid #f1f2f3;
   border-left: 5px solid #000000;
+  border-right: 5px solid #f1f2f3;
+  border-bottom: 5px solid #f1f2f3;
+}
+
+.dir-trigger-icon.open {
+  display: inline-block;
+  border-top: 5px solid #000000;
+  border-left: 5px solid #f1f2f3;
   border-right: 5px solid #f1f2f3;
   border-bottom: 5px solid #f1f2f3;
 }

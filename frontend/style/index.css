@@ -1,13 +1,11 @@
-html, body {
-    height: 100%;
-    overflow: hidden;
+body {
     background: #f1f2f3;
     font-family: "STHeiti", "Microsoft YaHei", monospace;
+    margin: 8px 0;
 }
 
 #devices_container {
-    /*margin: 30px 0 60px 0;*/
-    overflow-y: auto;
+    padding-left: 50px;
 }
 
 .device-wrap {
@@ -16,7 +14,7 @@ html, body {
     padding: 10px 20px 0px 20px;
     box-shadow: 0px 0px 10px 0 rgba(0, 0, 0, 0.3);
     border-radius: 5px;
-    margin: 15px;
+    margin: 15px 30px 15px 0;
     height:315px;
     overflow: hidden;
     background: #fff;
@@ -71,10 +69,10 @@ html, body {
 }
 
 fieldset {
-    /*margin: 20px;*/
-    /*min-height: 300px;*/
     border: none;
     border-top: 1px solid #bbb;
+    padding-left: 0;
+    margin: 0;
 }
 
 legend {
@@ -213,10 +211,9 @@ legend {
 }
 
 .qrcode-section {
-    margin: 20px 0;
-    width: 23%;
+    margin: 20px 70px 20px 0;
+    width: 240px;
     display: inline-block;
-    /*padding: 0 50px;*/
     text-align: center;
     vertical-align: top;
 }
@@ -313,4 +310,6 @@ hr {
 .switch-checkbox:checked + .switch-label .switch-switch {
     right: 0px;
 }
-
+#qrcode_container {
+    padding-left: 20px;
+}

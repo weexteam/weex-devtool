@@ -14,14 +14,13 @@
 <!--file list tree view-->
 <div id="tree_view"></div>
 
-<div class="main">
+<div id="main_content">
     <fieldset>
         <legend>QR code List</legend>
         <div id="qrcode_container">
             <div class="qrcode-section">
                 <div id="switchQrcode" class="qrcode"></div>
-                <div class="qrcode-desc">this qrcode could be used with playground to start Debugger.
-                </div>
+                <div class="qrcode-desc">Switch to debug mode</div>
             </div>
         </div>
     </fieldset>
@@ -31,7 +30,7 @@
         <legend>Devices List</legend>
         <div id="devices_container"></div>
     </fieldset>
-    <!--<div class="help-ctn" id="help_ctn">
+    <div class="help-ctn" id="help_ctn">
         <section>
             <b>Debugger</b>
 
@@ -43,9 +42,10 @@
             <div>click this button to open a page to inspect "Elements"(native element), "Console", "Sources", "Network"
             </div>
         </section>
-    </div>-->
+    </div>
 </div>
 
+<script src="lib/TreeView.js"></script>
 <script src="lib/App.js"></script>
 </body>
 
