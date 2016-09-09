@@ -162,7 +162,7 @@ function startServerAndLaunchDevtool(entry) {
     Config.ip = ip;
     console.info('start debugger server at ' + LogStyle.dressUp('http://' + ip + ':' + port, LogStyle.FG_YELLOW, LogStyle.BRIGHT));
     if (entry) {
-        Config.entryBundleUrl = 'http://' + ip + ':' + port + Path.join('/' + Config.bundleDir, Path.basename(entry).replace(/\.we$/, '.js'));
+        Config.entryBundleUrl = 'http://' + ip + ':' + port + Path.join('/' + Config.bundleDir, Path.basename(entry).replace(/\.we$/, '.js')).replace(/\\/g,'/');
         console.log('\nYou can visit we file(s) use ' + Config.entryBundleUrl);
         console.log('Also you can use Playground App to scan the qrcode on device list page.');
     }
