@@ -11,8 +11,8 @@ TreeView.prototype = {
   constructor: TreeView,
   init: function (files) {
     var self = this;
-    var htmlStr = self.getTreeViewHtml(files);
     var containerWidth = '240px';
+    var htmlStr = self.getTreeViewHtml(files, 'init');
 
     self.container.innerHTML = htmlStr;
     self.container.style.display = 'block';
@@ -49,7 +49,8 @@ TreeView.prototype = {
     var path = self.target.dataset.path;
     path = path.slice(self.basePath.length);
     var baseBundleUrl = `http:\/\/${location.host}/weex${path}`;
-    var bundleUrl = `${baseBundleUrl}?_wx_tpl=${baseBundleUrl}`;
+    var encodedURI = encodeURIComponent(baseBundleUrl);
+    var bundleUrl = `${baseBundleUrl}?_wx_tpl=${encodedURI}`;
     var name = self.target.dataset.name;
     var qrcodeElm = document.getElementById('entryQrcode0');
 
@@ -114,19 +115,25 @@ TreeView.prototype = {
 
     target.insertAdjacentHTML('afterend', htmlStr);
   },
-  getTreeViewHtml: function (files) {
+  getTreeViewHtml: function (files, init) {
     var self = this;
     var path = (self.target ? self.target.dataset['path'] : '');
-    var htmlStr = `<ul class="tree-view-list" data-parent-path=${path}>`;
+    if (init) {
+      var htmlStr = `<ul class="tree-view-list tree-view-root" data-parent-path=${path}>`;
+      document.body.insertAdjacentHTML('beforeend', '<div class="tree-view-header">Folders</div>');
+    } else {
+      var htmlStr = `<ul class="tree-view-list" data-parent-path=${path}>`;
+    }
 
     files.forEach(function (item) {
-        htmlStr += `<li data-type=${item.type} data-path=${item.path} data-name=${item.name}>
-            <span class='${item.type}-trigger-icon'></span>
-            <a>
-                <i class='${item.type}-icon'></i>
-                <span>${item.name}</span>
-            </a>
-        </li>`;
+      htmlStr += `<li data-type=${item.type} data-path=${item.path}
+          data-name=${item.name} class='tree-view-item'>
+          <span class='${item.type}-trigger-icon'></span>
+          <a class='tree-anchor'>
+              <i class='${item.type}-icon'></i>
+              <span>${item.name}</span>
+          </a>
+      </li>`;
     })
 
     htmlStr += '</ul>';
