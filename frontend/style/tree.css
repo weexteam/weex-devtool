@@ -1,0 +1,76 @@
+/** tree view style */
+#tree_view {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  overflow: auto;
+  /*width: 240px;*/
+  border-right: 1px solid #bbbbbb;
+}
+
+.tree-view-list {
+  list-style-type: none;
+  padding-left: 24px;
+}
+
+.file-icon, .dir-icon, .dir-trigger-icon {
+  vertical-align: middle;
+}
+.file-icon::before {
+  content: url('data:image/svg+xml;charset=UTF-8,<svg%20style%3D"fill%3A%20%23777"%20height%3D"16"%20width%3D"12"%20xmlns%3D"http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg">%0A%20%20<path%20d%3D"M6%205H2v-1h4v1zM2%208h7v-1H2v1z%20m0%202h7v-1H2v1z%20m0%202h7v-1H2v1z%20m10-7.5v9.5c0%200.55-0.45%201-1%201H1c-0.55%200-1-0.45-1-1V2c0-0.55%200.45-1%201-1h7.5l3.5%203.5z%20m-1%200.5L8%202H1v12h10V5z"%20%2F>%0A<%2Fsvg>%0A');
+}
+
+.dir-icon::before {
+  content: url('data:image/svg+xml;charset=UTF-8,%3Csvg%20style%3D%22fill%3A%20%2380a6cd%22%20height%3D%2216%22%20width%3D%2214%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%20%20%3Cpath%20d%3D%22M13%204H7v-1c0-0.66-0.31-1-1-1H1c-0.55%200-1%200.45-1%201v10c0%200.55%200.45%201%201%201h12c0.55%200%201-0.45%201-1V5c0-0.55-0.45-1-1-1z%20m-7%200H1v-1h5v1z%22%20%2F%3E%0A%3C%2Fsvg%3E%0A');
+}
+
+.dir-trigger-icon {
+  display: inline-block;
+  border-top: 5px solid #f1f2f3;
+  border-left: 6px solid #000000;
+  border-right: 5px solid #f1f2f3;
+  border-bottom: 5px solid #f1f2f3;
+}
+
+.dir-trigger-icon.open {
+  display: inline-block;
+  border-top: 6px solid #000000;
+  border-left: 5px solid #f1f2f3;
+  border-right: 5px solid #f1f2f3;
+  border-bottom: 5px solid #f1f2f3;
+}
+
+.file-trigger-icon {
+  width: 10px;
+  display: inline-block;
+}
+
+.tree-view-item {
+  white-space: nowrap;
+}
+
+.tree-anchor {
+    line-height: 24px;
+    height: 24px;
+    white-space: nowrap;
+    font-size: 16px;
+    color: rgb(65, 131, 196);
+}
+
+.tree-view-header {
+  background: #f1f2f3;
+  border-bottom: 1px solid #bbbbbb;
+  height: 27px;
+  line-height: 27px;
+  text-align: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 240px;
+}
+
+.tree-view-root {
+  margin-top: 30px;
+}

@@ -95,15 +95,26 @@ function exists(file) {
 let bundleDir = Path.join(__dirname, '../../frontend/', Config.bundleDir);
 httpRouter.get('/' + Config.bundleDir + '/*', function*(next) {
     let ext = Path.extname(this.params[0]);
-    if (ext == '.js' || ext == '.we') {
+    if (ext == '.js' || ext == '.we' || ext == '.map') {
         let dir = Path.dirname(this.params[0]);
         let basename = Path.basename(this.params[0], ext);
         let bundle = Path.join(bundleDir, dir, basename + '.js');
         let we = Path.join(Config.root || bundleDir, dir, basename + '.we');
+        let thirdPartyBundle = Config.root ? Path.join(Config.root, this.params[0]) : '';
+
         if (yield exists(bundle)) {
             this.response.status = 200;
             this.type = 'text/javascript';
             this.response.body = Fs.createReadStream(bundle);
+        }
+        else if (yield exists(thirdPartyBundle)) {
+            this.response.status = 200;
+            if (ext === '.js') {
+                this.type = 'text/javascript';
+            } else {
+                this.type = 'text/plain';
+            }
+            this.response.body = Fs.createReadStream(thirdPartyBundle);
         }
         else if (yield exists(we)) {
             let targetPath = yield Builder[Config.buildMode](we, dir);

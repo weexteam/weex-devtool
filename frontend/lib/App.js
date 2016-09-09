@@ -1,6 +1,8 @@
 var websocket;
 var maxReconnectCount = 5;
 var _deviceList = [];
+var treeView;
+
 function connect() {
     websocket = new WebSocket('ws://' + location.host + '/debugProxy/list');
     websocket.onmessage = function (event) {
@@ -38,6 +40,12 @@ function connect() {
                 device.debuggerWindow && device.debuggerWindow.location.reload();
             })
 
+        }
+        else if (message.method == 'WxDebug.renderTreeView') {
+            treeView = new TreeView(message.params, message.basePath);
+        }
+        else if (message.method == 'WxDebug.renderDirView') {
+            treeView.renderDirView(message.params);
         }
 
     };
@@ -101,7 +109,7 @@ function renderDeviceList(deviceList) {
 
     });
     if(html.length>0) {
-        document.getElementById('container').innerHTML = html.join('\n');
+        document.getElementById('devices_container').innerHTML = html.join('\n');
         var logLevelList = document.querySelectorAll('.log-level');
         var switchList=document.querySelectorAll('.switch');
         logLevelList.forEach(function(loglevelSelector){
@@ -159,7 +167,7 @@ function renderDeviceList(deviceList) {
 
     }
     else{
-        document.getElementById('container').innerHTML ='';
+        document.getElementById('devices_container').innerHTML ='';
     }
 }
 function findDevice(deviceId) {
@@ -188,7 +196,8 @@ function openInspector(deviceId) {
 function createQRCode(id, content, width, height) {
     var el = document.getElementById(id);
     el.innerHTML = '';
-    new QRCode(el, {
+    el.title = '';
+    return new QRCode(el, {
         text: content,
         width: width || 150,
         height: height || 150,
@@ -196,7 +205,6 @@ function createQRCode(id, content, width, height) {
         colorLight: "#ffffff",
         correctLevel: QRCode.CorrectLevel.L
     });
-    el.title = '';
 }
 var switchComponent=function(device){
     return `<div class="switch">
