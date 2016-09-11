@@ -46,8 +46,7 @@ TreeView.prototype = {
   },
   updateQrCode: function () {
     var self = this;
-    var path = self.target.dataset.path;
-    path = path.slice(self.basePath.length);
+    var path = self.getPath();
     var baseBundleUrl = `http:\/\/${location.host}/weex${path}`;
     var encodedURI = encodeURIComponent(baseBundleUrl);
     var bundleUrl = `${baseBundleUrl}?_wx_tpl=${encodedURI}`;
@@ -139,6 +138,18 @@ TreeView.prototype = {
     htmlStr += '</ul>';
 
     return htmlStr;
+  },
+  getPath: function () {
+    var self = this;
+    var path = self.target.dataset.path;
+    path = path.slice(self.basePath.length);
+
+    var ext = path.slice(-3);
+    if (ext === '.we') {
+      var path = path.slice(0, -3) + '.js';
+    }
+
+    return path;
   }
 
 }
