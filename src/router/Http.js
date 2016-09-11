@@ -95,11 +95,12 @@ function exists(file) {
 let bundleDir = Path.join(__dirname, '../../frontend/', Config.bundleDir);
 httpRouter.get('/' + Config.bundleDir + '/*', function*(next) {
     let ext = Path.extname(this.params[0]);
-    if (ext == '.js' || ext == '.we' || ext == '.map') {
+    if (ext == '.js' || ext == '.we') {
         let dir = Path.dirname(this.params[0]);
         let basename = Path.basename(this.params[0], ext);
         let bundle = Path.join(bundleDir, dir, basename + '.js');
         let we = Path.join(Config.root || bundleDir, dir, basename + '.we');
+        // rx bundle
         let thirdPartyBundle = Config.root ? Path.join(Config.root, this.params[0]) : '';
 
         if (yield exists(bundle)) {
@@ -109,11 +110,7 @@ httpRouter.get('/' + Config.bundleDir + '/*', function*(next) {
         }
         else if (yield exists(thirdPartyBundle)) {
             this.response.status = 200;
-            if (ext === '.js') {
-                this.type = 'text/javascript';
-            } else {
-                this.type = 'text/plain';
-            }
+            this.type = 'text/javascript';
             this.response.body = Fs.createReadStream(thirdPartyBundle);
         }
         else if (yield exists(we)) {
