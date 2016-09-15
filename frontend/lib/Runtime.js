@@ -30,7 +30,18 @@ self.callNative = function (instance, tasks, callback) {
         }
     })
 };
-
+self.callAddElement=function(instance, ref, dom, index, callback){
+    postMessage({
+        method: 'WxDebug.callAddElement',
+        params: {
+            instance: instance,
+            ref: ref,
+            dom:dom,
+            index:index,
+            callback: callback
+        }
+    })
+};
 self.__logger = function (level, msg) {
     console[level]('native:', msg);
 };

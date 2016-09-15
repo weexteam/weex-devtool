@@ -1,3 +1,5 @@
+0.2.39
+* 支持callAddElement
 0.2.38
 * 修复windows bundle url路径的bug
 0.2.37
