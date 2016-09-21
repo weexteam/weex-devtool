@@ -101,10 +101,18 @@ httpRouter.get('/' + Config.bundleDir + '/*', function*(next) {
         let basename = Path.basename(this.params[0], ext);
         let bundle = Path.join(bundleDir, dir, basename + '.js');
         let we = Path.join(Config.root || bundleDir, dir, basename + '.we');
+        // rx bundle
+        let thirdPartyBundle = Config.root ? Path.join(Config.root, this.params[0]) : '';
+
         if (yield exists(bundle)) {
             this.response.status = 200;
             this.type = 'text/javascript';
             this.response.body = Fs.createReadStream(bundle);
+        }
+        else if (yield exists(thirdPartyBundle)) {
+            this.response.status = 200;
+            this.type = 'text/javascript';
+            this.response.body = Fs.createReadStream(thirdPartyBundle);
         }
         else if (yield exists(we)) {
             let targetPath = yield Builder[Config.buildMode](we, dir);
