@@ -1,3 +1,9 @@
+0.2.72
+*去掉对location的屏蔽 for rax
+0.2.71
+*更新weex-loader到0.4.2-beta已解决问题
+*修复jsfm setTimeout bug
+*优化计算版本比较值的函数
 0.2.70
 * 回退weex-loader版本 新版本有问题
 0.2.69

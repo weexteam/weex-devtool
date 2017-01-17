@@ -46,6 +46,18 @@ var injectedGlobals = [
     '__weex_require_module__',
     'Vue'
 ];
+let cachedSetTimeout=this.setTimeout;
+Object.defineProperty(this,'setTimeout',{
+    get:function(){
+        return cachedSetTimeout;
+    },
+    set:function(){
+
+    }
+});
+function EventEmitter() {
+    this._handlers = {};
+}
 importScripts('/lib/EventEmitter.js');
 function createWeexBundleEntry(sourceUrl){
     var code='';
@@ -54,7 +66,7 @@ function createWeexBundleEntry(sourceUrl){
     }
     code+='__weex_bundle_entry__(';
     injectedGlobals.forEach(function(g,i){
-        if(g==='location'||g==='navigator'){
+        if(g==='navigator'){
             code+='typeof '+g+'==="undefined"||'+g+'===self.'+g+'?undefined:'+g;
         }
         else{

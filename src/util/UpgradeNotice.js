@@ -16,7 +16,7 @@ exports.run = function () {
 }
 function getVersionValue(version) {
     let sum = 0;
-    version.split('.').forEach((n, i, arr)=> {
+    version.split('.').filter(n=>isFinite(n)).forEach((n, i, arr)=> {
         sum += Math.pow(10, (arr.length - i - 1) * 4) * n;
     });
     return sum;
