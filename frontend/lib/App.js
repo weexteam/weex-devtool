@@ -47,7 +47,7 @@ function connect() {
             setTimeout(connect, 1000);
         }
         else {
-            alert('Websocket error!Maybe the debug server crashed!')
+            //alert('Websocket error!Maybe the debug server crashed!')
         }
 
     }
@@ -227,5 +227,7 @@ var switchComponent=function(device,label){
 </div>`;
 }
     connect();
-createQRCode('switchQrcode', `http:\/\/${location.host}/devtool_fake.html?_wx_devtool=ws:\/\/${location.host}/debugProxy/native`);
-
+//createQRCode('switchQrcode', `http:\/\/${location.host}/devtool_fake.html?_wx_devtool=ws:\/\/${location.host}/debugProxy/native`);
+var qapDebugContnt = decodeURIComponent(location.search.split('debug=')[1]);
+console.log("qapDebugContnt:\n" + qapDebugContnt);
+createQRCode('switchQrcode', qapDebugContnt);
