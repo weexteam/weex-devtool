@@ -76,7 +76,7 @@ else {
 }
 //清空
 try {
-    Del.sync(Path.join(__dirname, '../frontend/', Config.bundleDir, '/*'), {force: true});
+    Del.sync(Path.join(__dirname, '../frontend/', Config.bundleDir, '/*'), { force: true });
 } catch (e) {
 }
 
@@ -134,7 +134,17 @@ function buildAndStart() {
             //处理目录
             if (Fs.statSync(filePath).isDirectory()) {
                 Config.root = filePath;
-                startServerAndLaunchDevtool(Program.entry)
+                startServerAndLaunchDevtool(Program.entry);
+                Watch(filePath, function () {
+                    console.time('Delete jsBundle completed! ')
+                    //清空
+                    try {
+                        Del.sync(Path.join(__dirname, '../frontend/', Config.bundleDir, '/*'), { force: true });
+                    } catch (e) {
+                    }
+                    console.timeEnd('Delete jsBundle completed! ')
+                    MessageBus.emit('page.refresh');
+                })
             }
             else {
                 console.error(Program.file + ' is not a directory!');
