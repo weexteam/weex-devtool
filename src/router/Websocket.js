@@ -10,6 +10,7 @@ const Logger = require('../components/Logger');
 const Config = require('../components/Config');
 const MessageBus = require('../components/MessageBus');
 const bundleWrapper = require('../util/BundleWrapper');
+const JavaScriptObfuscator = require('javascript-obfuscator');
 let wsRouter = Router();
 let chromeWsIndex = 2;
 let nativeWsIndex = 1;
@@ -182,7 +183,24 @@ wsRouter.all('/debugProxy/native', function*(next) {
                 }
                 else if (method == 'callJS' && message.params.method == 'createInstance') {
                     if (device) {
-                        message.params.sourceUrl = new MemoryFile(message.params.args[2].bundleUrl || (Uuid() + '.js'), bundleWrapper(message.params.args[1])).getUrl();
+                        let code=message.params.args[1];
+                        if(message.params.args[2]&&(message.params.args[2]['debuggable']==='false'||message.params.args[2]['debuggable']===false)) {
+                            var obfuscationResult = JavaScriptObfuscator.obfuscate(message.params.args[1], {
+                                compact: true,
+                                controlFlowFlattening: false,
+                                debugProtection: false,
+                                debugProtectionInterval: false,
+                                disableConsoleOutput: true,
+                                rotateStringArray: true,
+                                selfDefending: true,
+                                stringArray: true,
+                                stringArrayEncoding: false,
+                                stringArrayThreshold: 0.75,
+                                unicodeEscapeSequence: true
+                            });
+                            code=obfuscationResult.getObfuscatedCode();
+                        }
+                        message.params.sourceUrl = new MemoryFile(message.params.args[2].bundleUrl || (Uuid() + '.js'), bundleWrapper(code)).getUrl();
                         device.debuggerSession.postMessage(this, message);
                     }
                     else {

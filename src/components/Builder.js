@@ -12,6 +12,14 @@ var Mkdirp = require('mkdirp');
 const ext2Name={
     '.we':'Weex',
     '.vue':'Vue'
+};
+function loadModulePath(moduleName,extra) {
+    try {
+        var path = require.resolve(Path.join(moduleName,extra||''));
+        return path.slice(0, path.indexOf(moduleName) + moduleName.length);
+    } catch (e) {
+        return moduleName;
+    }
 }
 exports.loader = function (source, targetPath = '') {
     return new Promise((resolve, reject)=> {
@@ -44,6 +52,13 @@ exports.loader = function (source, targetPath = '') {
                         loader: 'weex'
                     }
                 ]
+            },
+            resolve: {
+                alias: {
+                    'babel-runtime': loadModulePath('babel-runtime','core-js'),
+                    'babel-polyfill':loadModulePath('babel-polyfill'),
+                    'weex-components':loadModulePath('weex-components')
+                }
             },
             resolveLoader: {
                 root:weexLoaderRoot

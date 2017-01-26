@@ -1,3 +1,8 @@
+0.2.76
+* 支持千牛的调试隔离需求 对bundle做混淆(可配置)
+* 去掉升级检查里的换行
+0.2.75
+* 优化编译模块,重定向webpack对于babel-runtime、babel-polyfill、weex-components的resolve
 0.2.74
 * 紧急修复normalize的bug
 0.2.73

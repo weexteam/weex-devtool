@@ -8,7 +8,7 @@ let version = require('../../package.json').version;
 exports.run = function () {
     let npm = spawn(process.platform==='win32'?'npm.cmd':'npm', ['show', 'weex-devtool', 'version']);
     npm.stdout.on('data', (data) => {
-        let latestVersion = data.toString();
+        let latestVersion = data.toString().trim();
         if (getVersionValue(version) < getVersionValue(latestVersion)) {
             console.log(LogStyle.dressUp('New version['+latestVersion+'] of Weex debugger detected! Please update.(npm install -g weex-toolkit)', LogStyle.FG_RED))
         }
