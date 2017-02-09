@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Weex Devtool - App List</title>
+    <title>QAP Devtool - App List</title>
     <script src="vendor/qrcode.min.js"></script>
     <style>
         body {
@@ -11,7 +11,7 @@
         }
 
         #container {
-            margin: 30px 0 60px 0;
+            margin: -20px 0 0px 0;
         }
 
         .device-wrap {
@@ -21,10 +21,9 @@
             box-shadow: 0px 0px 10px 0 rgba(0, 0, 0, 0.3);
             border-radius: 5px;
             margin: 15px;
-            min-height:270px;
+            height:315px;
             overflow: hidden;
             background: #fff;
-            padding-bottom: 60px;
         }
 
         .line {
@@ -234,8 +233,7 @@
             font-size: 18px;
         }
         .mr-top-10{
-            margin:10px 0;
-
+            margin-top:10px;
         }
         .mr-top-10 b{
             vertical-align: middle;
@@ -327,39 +325,43 @@
 </head>
 
 <body>
-<fieldset>
-    <legend>App List</legend>
-    <div id="container"></div>
-</fieldset>
-<div class="help-ctn" id="help_ctn">
-    <section>
-        <b>Debugger</b>
-
-        <div>点击这个按钮将会打开js debugger页面，您可以通过debugger页面调试js(诸如打断点 查看js log 和查看调用堆栈)</div>
-    </section>
-    <section>
-        <b>Inspector</b>
-
-        <div>点击这个按钮将会打开inspector页面，您可以通过这个页面查看weex页面的element属性结构，包含高亮元素，展示样式表，以及显示native的log。同时可以打开一个远程的手机镜像，便于查看界面。
-            <br>另外调试方块中的<em>ElementMode</em>可以用来选择element树显示<em>原始的native组件树</em>还是显示面向前端同学的<em>DSL(HTML)组件树</em>。
+    <fieldset>
+        <legend>App List</legend>
+        <div id="container"></div>
+    </fieldset>
+    <div style="width:100%; height:100%; text-align: left; margin-top: -20px">
+        <div style="width: 30%;float: left;">
+            <div id="qrcode_container">
+                <div class="qrcode-section">
+                    <div id="switchQrcode" class="qrcode"></div>
+                    <div class="qrcode-desc" style="width:250px">请使用千牛工作台右上角扫一扫，开始调试.
+                    </div>
+                </div>
+            </div>
         </div>
-    </section>
-    <section>
-        <b>Remote Debug</b>
-
-        <div>开启Remote Debug后weex的js将会在chrome的v8里运行（仍然会在native端渲染），只有开启Remote Debug才能断点调试js（点击Debugger按钮会自动打开Remote Debug）<br>不开启RemoteDebug 可以通过inspector页面查看weex页面elements树
+        <div style="width: 70%;float: right">
+            <div class="help-ctn" id="help_ctn" style="padding-top:25px">
+                <section>
+                    <b>Debugger</b>
+                    <div>点击这个按钮将会打开js debugger页面，您可以通过debugger页面调试js(诸如打断点 查看js log 和查看调用堆栈)</div>
+                </section>
+                <section>
+                    <b>Inspector</b>
+                    <div>点击这个按钮将会打开inspector页面，您可以通过这个页面查看weex页面的element属性结构，包含高亮元素，展示样式表，以及显示native的log。同时可以打开一个远程的手机镜像，便于查看界面。
+                        <br>另外调试方块中的<em>ElementMode</em>可以用来选择element树显示<em>原始的native组件树</em>还是显示面向前端同学的<em>DSL(HTML)组件树</em>。
+                    </div>
+                </section>
+                <section>
+                    <b>Remote Debug</b>
+                    <div>开启Remote Debug后weex的js将会在chrome的v8里运行（仍然会在native端渲染），只有开启Remote Debug才能断点调试js（点击Debugger按钮会自动打开Remote Debug）
+                        <br>不开启RemoteDebug 可以通过inspector页面查看weex页面elements树
+                    </div>
+                </section>
+            </div>
         </div>
-    </section>
-</div>
-<div id="qrcode_container">
-    <div class="qrcode-section">
-        <div id="switchQrcode" class="qrcode"></div>
-        <div class="qrcode-desc">this qrcode could be used with playground to start Debugger.
-        </div>
+        <div style="clear: both"></div>
     </div>
-</div>
-
-<script src="lib/App.js"></script>
+    <script src="lib/App.js"></script>
 </body>
 
 </html>
