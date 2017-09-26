@@ -13,3 +13,6 @@ test/
 .DS_Store
 .vscode
 *.sw*
+
+# Build
+frontend/weex/
